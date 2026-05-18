@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir C:UsersCAMQPDesktopkasafrikkasafrik-frontend *)",
+      "Read(//mnt/c/Users/CAMQP/Desktop/**)",
+      "Read(//c/Users/CAMQP/Desktop/kasafrik/**)",
+      "Bash(npx create-next-app@latest *)"
+    ]
+  }
+}
