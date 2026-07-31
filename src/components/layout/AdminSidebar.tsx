@@ -18,6 +18,8 @@ import {
   TrendingUp,
   Zap,
   X,
+  Megaphone,
+  Banknote,
 } from "lucide-react";
 import { logout } from "@/lib/api";
 import type { User } from "@/types";
@@ -36,6 +38,7 @@ const navItems = [
       { label: "Propriétés", href: "/admin/properties", icon: Building2 },
       { label: "Événements", href: "/admin/events", icon: Calendar },
       { label: "Billets", href: "/admin/tickets", icon: Ticket },
+      { label: "Annonces", href: "/admin/annonces", icon: Megaphone },
     ],
   },
   {
@@ -49,6 +52,7 @@ const navItems = [
     section: "Finance",
     items: [
       { label: "Paiements", href: "/admin/payments", icon: CreditCard },
+      { label: "Caisse", href: "/admin/caisse", icon: Banknote },
       { label: "Boosts", href: "/admin/boosts", icon: Zap },
     ],
   },
