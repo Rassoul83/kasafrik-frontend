@@ -16,6 +16,35 @@ export const translations = {
     reference: "La référence immobilière & événementielle en Afrique",
     explorer: "Explorer les annonces",
     publier_annonce: "Publier une annonce",
+    // Pages
+    immobilier_titre: "Immobilier en Afrique",
+    evenements_titre: "Événements en Afrique",
+    billetterie_titre: "Billetterie",
+    hotels_titre: "Hôtels & Guesthouses",
+    // Formulaires
+    email: "Adresse email",
+    mot_de_passe: "Mot de passe",
+    se_connecter: "Se connecter",
+    creer_compte: "Créer un compte",
+    nom: "Nom complet",
+    telephone: "Téléphone",
+    // Cards
+    vente: "Vente",
+    location: "Location",
+    court_sejour: "Court séjour",
+    chambres: "chambres",
+    salles_bain: "sdb",
+    voir_annonce: "Voir l'annonce",
+    acheter_billets: "Acheter des billets",
+    // Footer
+    a_propos: "À propos",
+    contact: "Contact",
+    conditions: "Conditions",
+    confidentialite: "Confidentialité",
+    // Navbar
+    deconnexion: "Déconnexion",
+    mon_profil: "Mon profil",
+    dashboard: "Dashboard",
   },
   en: {
     home: "Home",
@@ -34,6 +63,35 @@ export const translations = {
     reference: "The real estate & events reference in Africa",
     explorer: "Explore listings",
     publier_annonce: "Post an ad",
+    // Pages
+    immobilier_titre: "Real Estate in Africa",
+    evenements_titre: "Events in Africa",
+    billetterie_titre: "Tickets",
+    hotels_titre: "Hotels & Guesthouses",
+    // Forms
+    email: "Email address",
+    mot_de_passe: "Password",
+    se_connecter: "Log in",
+    creer_compte: "Create an account",
+    nom: "Full name",
+    telephone: "Phone",
+    // Cards
+    vente: "Sale",
+    location: "Rent",
+    court_sejour: "Short stay",
+    chambres: "bedrooms",
+    salles_bain: "bath",
+    voir_annonce: "View listing",
+    acheter_billets: "Buy tickets",
+    // Footer
+    a_propos: "About",
+    contact: "Contact",
+    conditions: "Terms",
+    confidentialite: "Privacy",
+    // Navbar
+    deconnexion: "Log out",
+    mon_profil: "My profile",
+    dashboard: "Dashboard",
   },
   ar: {
     home: "الرئيسية",
@@ -52,6 +110,35 @@ export const translations = {
     reference: "المرجع العقاري والترفيهي في أفريقيا",
     explorer: "استكشف الإعلانات",
     publier_annonce: "نشر إعلان",
+    // الصفحات
+    immobilier_titre: "العقارات في أفريقيا",
+    evenements_titre: "الفعاليات في أفريقيا",
+    billetterie_titre: "التذاكر",
+    hotels_titre: "الفنادق والاستراحات",
+    // النماذج
+    email: "البريد الإلكتروني",
+    mot_de_passe: "كلمة المرور",
+    se_connecter: "تسجيل الدخول",
+    creer_compte: "إنشاء حساب",
+    nom: "الاسم الكامل",
+    telephone: "الهاتف",
+    // البطاقات
+    vente: "بيع",
+    location: "إيجار",
+    court_sejour: "إقامة قصيرة",
+    chambres: "غرف",
+    salles_bain: "حمامات",
+    voir_annonce: "عرض الإعلان",
+    acheter_billets: "شراء التذاكر",
+    // التذييل
+    a_propos: "من نحن",
+    contact: "اتصل بنا",
+    conditions: "الشروط",
+    confidentialite: "الخصوصية",
+    // شريط التنقل
+    deconnexion: "تسجيل الخروج",
+    mon_profil: "ملفي الشخصي",
+    dashboard: "لوحة التحكم",
   }
 };
 

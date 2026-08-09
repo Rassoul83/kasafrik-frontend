@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { CURRENCY_CHANGE_EVENT } from "@/hooks/useCurrency";
 
 const CURRENCIES = [
   { code: "GNF", label: "🇬🇳 GNF", name: "Franc Guinéen" },
@@ -41,6 +42,7 @@ export default function CurrencySelector() {
     setSelected(code);
     setOpen(false);
     localStorage.setItem(STORAGE_KEY, code);
+    window.dispatchEvent(new CustomEvent(CURRENCY_CHANGE_EVENT, { detail: code }));
   };
 
   return (

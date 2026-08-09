@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Clock, Ticket, Users } from "lucide-react";
+import { useCurrency } from "@/hooks/useCurrency";
 import type { Event } from "@/types";
 
 interface EventCardProps {
@@ -29,10 +32,6 @@ function formatTime(dateStr: string): string {
   }
 }
 
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("fr-FR").format(price) + " FCFA";
-}
-
 function isRecentlyAdded(dateStr: string): boolean {
   const created = new Date(dateStr);
   const diffDays = (Date.now() - created.getTime()) / (1000 * 60 * 60 * 24);
@@ -54,6 +53,7 @@ const categoryConfig: Record<string, { color: string; label: string }> = {
 };
 
 export default function EventCard({ event }: EventCardProps) {
+  const { convert } = useCurrency();
   const dateLabel = formatDate(event.start_date);
   const timeLabel = formatTime(event.start_date);
   const isNew     = isRecentlyAdded(event.created_at);
@@ -180,7 +180,7 @@ export default function EventCard({ event }: EventCardProps) {
                 }}
               >
                 <p className="text-[9px] font-bold mb-0.5 uppercase tracking-wider" style={{ color: catColor }}>Standard</p>
-                <p className="text-xs font-bold text-[#1A1A2E]">{formatPrice(standardTicket.price)}</p>
+                <p className="text-xs font-bold text-[#1A1A2E]">{convert(standardTicket.price)}</p>
               </div>
             )}
             {vipTicket && (
@@ -193,13 +193,13 @@ export default function EventCard({ event }: EventCardProps) {
                   style={{ background: `linear-gradient(135deg, ${catColor}, transparent)` }}
                 />
                 <p className="relative text-[9px] font-bold mb-0.5 uppercase tracking-wider" style={{ color: catColor }}>VIP</p>
-                <p className="relative text-xs font-bold text-white">{formatPrice(vipTicket.price)}</p>
+                <p className="relative text-xs font-bold text-white">{convert(vipTicket.price)}</p>
               </div>
             )}
             {!standardTicket && !vipTicket && cheapestTicket && (
               <div className="flex-1 bg-[#F5E6C8] rounded-xl p-2.5 text-center">
                 <p className="text-[9px] text-[#8A6118] uppercase font-bold mb-0.5 tracking-wider">À partir de</p>
-                <p className="text-xs font-bold text-[#C8922A]">{formatPrice(cheapestTicket.price)}</p>
+                <p className="text-xs font-bold text-[#C8922A]">{convert(cheapestTicket.price)}</p>
               </div>
             )}
           </div>

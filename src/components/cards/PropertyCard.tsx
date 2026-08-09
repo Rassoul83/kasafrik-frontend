@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Bed, Bath, Maximize, ArrowRight } from "lucide-react";
 import Badge from "@/components/ui/Badge";
+import { useCurrency } from "@/hooks/useCurrency";
 import type { Property } from "@/types";
 
 interface PropertyCardProps {
@@ -20,11 +23,6 @@ const typeBorder: Record<string, string> = {
   hotel: "#C84B2F",
 };
 
-function formatPrice(price: number): string {
-  if (!price || isNaN(price) || price <= 0) return "Prix sur demande";
-  return new Intl.NumberFormat("fr-FR").format(Math.round(price)) + " FCFA";
-}
-
 function isRecentlyAdded(dateStr: string): boolean {
   const created = new Date(dateStr);
   const diffDays = (Date.now() - created.getTime()) / (1000 * 60 * 60 * 24);
@@ -32,6 +30,7 @@ function isRecentlyAdded(dateStr: string): boolean {
 }
 
 export default function PropertyCard({ property }: PropertyCardProps) {
+  const { convert }  = useCurrency();
   const typeInfo    = typeLabels[property.type] ?? { label: property.type, variant: "gold" as const };
   const isNew       = isRecentlyAdded(property.created_at);
   const borderColor = typeBorder[property.type] ?? "#C8922A";
@@ -132,7 +131,9 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         {/* Prix */}
         <div className="flex items-baseline gap-1 mb-3">
           <p className="text-xl font-extrabold text-[#C8922A] leading-none">
-            {formatPrice(property.price)}
+            {property.price && !isNaN(property.price) && property.price > 0
+              ? convert(property.price)
+              : "Prix sur demande"}
           </p>
           {property.type === "rent" && (
             <span className="text-xs font-medium text-[#7A7265]">/mois</span>
