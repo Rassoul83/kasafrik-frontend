@@ -68,8 +68,9 @@ const MOCK_PAYMENTS: Payment[] = [
   { id: 4, user_id: 13, payable_type: "booking", payable_id: 4, amount: 120000, currency: "XOF", method: "wave", status: "completed", created_at: "2024-05-04T16:00:00Z", updated_at: "2024-05-04T16:00:00Z" },
 ];
 
-function fmt(n: number) {
-  return new Intl.NumberFormat("fr-FR").format(n);
+function fmt(n: unknown) {
+  const num = parseFloat(String(n ?? 0));
+  return new Intl.NumberFormat("fr-FR").format(isNaN(num) ? 0 : num);
 }
 
 function fmtDate(s: string) {
