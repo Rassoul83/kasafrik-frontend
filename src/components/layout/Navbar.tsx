@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import CurrencySelector from "./CurrencySelector";
+import LanguageSelector from "./LanguageSelector";
 
 const navLinks = [
   { label: "Immobilier",  href: "/immobilier"  },
@@ -65,6 +66,7 @@ export default function Navbar() {
 
           {/* ── Desktop Actions ───────────────────────────────────────── */}
           <div className="hidden md:flex items-center gap-3">
+            <LanguageSelector />
             <CurrencySelector />
             <div className="w-px h-4 bg-white/10" />
             <Link
@@ -129,8 +131,14 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Devise mobile */}
+          {/* Langue mobile */}
           <div className="pt-3 border-t border-white/6 flex items-center justify-between px-2 py-2">
+            <span className="text-xs text-gray-500">Langue</span>
+            <LanguageSelector />
+          </div>
+
+          {/* Devise mobile */}
+          <div className="border-t border-white/6 flex items-center justify-between px-2 py-2">
             <span className="text-xs text-gray-500">Devise</span>
             <CurrencySelector />
           </div>
