@@ -1,35 +1,43 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useLanguage } from "@/hooks/useLanguage";
+import type { translations } from "@/lib/i18n";
 
-const columns = [
+type TKey = keyof typeof translations.fr;
+
+const columns: { title: string; titleKey?: TKey; links: { labelKey: TKey; href: string }[] }[] = [
   {
     title: "Kasafrik",
     links: [
-      { label: "À propos",          href: "/a-propos"          },
-      { label: "Comment ça marche", href: "/comment-ca-marche" },
-      { label: "Blog",              href: "/blog"              },
-      { label: "Carrières",         href: "/carrieres"         },
-      { label: "Contact",           href: "/contact"           },
+      { labelKey: "a_propos",          href: "/a-propos"          },
+      { labelKey: "comment_ca_marche", href: "/comment-ca-marche" },
+      { labelKey: "blog",              href: "/blog"              },
+      { labelKey: "carrieres",         href: "/carrieres"         },
+      { labelKey: "contact",           href: "/contact"           },
     ],
   },
   {
-    title: "Services",
+    title: "",
+    titleKey: "services",
     links: [
-      { label: "Immobilier",            href: "/immobilier" },
-      { label: "Hôtels & Guesthouses",  href: "/hotels"     },
-      { label: "Événements",            href: "/evenements" },
-      { label: "Billetterie",           href: "/billetterie"},
-      { label: "Publier une annonce",   href: "/publier"    },
+      { labelKey: "immobilier",              href: "/immobilier" },
+      { labelKey: "hotels",                  href: "/hotels"     },
+      { labelKey: "evenements",              href: "/evenements" },
+      { labelKey: "billetterie",             href: "/billetterie"},
+      { labelKey: "publier_annonce_footer",  href: "/publier"    },
     ],
   },
   {
-    title: "Aide",
+    title: "",
+    titleKey: "aide_footer",
     links: [
-      { label: "Centre d'aide",              href: "/aide"            },
-      { label: "Guide vendeur",              href: "/aide/vendeur"    },
-      { label: "Politique de remboursement", href: "/remboursement"   },
-      { label: "Confidentialité",            href: "/confidentialite" },
-      { label: "Conditions d'utilisation",   href: "/conditions"      },
+      { labelKey: "centre_aide",   href: "/aide"            },
+      { labelKey: "guide_vendeur", href: "/aide/vendeur"    },
+      { labelKey: "remboursement", href: "/remboursement"   },
+      { labelKey: "confidentialite", href: "/confidentialite" },
+      { labelKey: "conditions",    href: "/conditions"      },
     ],
   },
 ];
@@ -130,6 +138,7 @@ const socials = [
 /* ─── Footer ───────────────────────────────────────────────────────────────── */
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="relative text-white overflow-hidden" style={{ background: "#0D0D1A" }}>
 
@@ -157,18 +166,17 @@ export default function Footer() {
               />
             </div>
             <p className="text-[14px] text-gray-400 leading-relaxed mb-4">
-              La référence immobilière &amp; événementielle en Afrique de l&apos;Ouest.
-              Achetez, louez, réservez et participez — tout en un, en toute sécurité.
+              {t('footer_description')}
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#C8922A]/20 bg-[#C8922A]/5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#4A7C59] animate-pulse-dot" />
-              <span className="text-[11px] text-gray-400 font-medium">Support 7j/7 · Dakar, Sénégal</span>
+              <span className="text-[11px] text-gray-400 font-medium">{t('support')} · Dakar, Sénégal</span>
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
             <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">
-              Nous suivre
+              {t('nous_suivre')}
             </p>
             <div className="flex items-center gap-2.5">
               {socials.map((s) => (
@@ -192,19 +200,19 @@ export default function Footer() {
         {/* ── Colonnes de liens ──────────────────────────────────── */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8 mb-14">
           {columns.map((col) => (
-            <div key={col.title}>
+            <div key={col.titleKey ?? col.title}>
               <h4 className="text-[11px] font-bold text-[#C8922A] mb-5 uppercase tracking-widest">
-                {col.title}
+                {col.titleKey ? t(col.titleKey) : col.title}
               </h4>
               <ul className="space-y-3">
                 {col.links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.labelKey}>
                     <Link
                       href={link.href}
                       className="text-[13px] text-gray-400 hover:text-white transition-colors duration-200 flex items-center gap-1.5 group"
                     >
                       <span className="w-0 h-px bg-[#C8922A] group-hover:w-3 transition-all duration-200 rounded" />
-                      {link.label}
+                      {t(link.labelKey)}
                     </Link>
                   </li>
                 ))}
@@ -216,7 +224,7 @@ export default function Footer() {
         {/* ── Paiements ─────────────────────────────────────────── */}
         <div className="border-t border-white/6 pt-10">
           <p className="text-[11px] text-gray-600 mb-5 uppercase tracking-widest font-bold">
-            Paiements acceptés
+            {t('modes_paiement')}
           </p>
           <div className="flex flex-wrap gap-3 mb-10 items-center">
             {paymentLogos.map(({ key, Logo }) => (
@@ -232,15 +240,15 @@ export default function Footer() {
           {/* ── Barre basse ───────────────────────────────────────── */}
           <div className="border-t border-white/6 pt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <p className="text-[12px] text-gray-600">
-              © {new Date().getFullYear()} Kasafrik · Tous droits réservés ·{" "}
+              © {new Date().getFullYear()} Kasafrik · {t('droits_reserves')} ·{" "}
               <span className="text-gray-700">Dakar, Sénégal</span>
             </p>
             <div className="flex gap-5">
               <Link href="/confidentialite" className="text-[12px] text-gray-600 hover:text-[#C8922A] transition-colors">
-                Confidentialité
+                {t('confidentialite')}
               </Link>
               <Link href="/conditions" className="text-[12px] text-gray-600 hover:text-[#C8922A] transition-colors">
-                Conditions
+                {t('conditions')}
               </Link>
               <Link href="/cookies" className="text-[12px] text-gray-600 hover:text-[#C8922A] transition-colors">
                 Cookies

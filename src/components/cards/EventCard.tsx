@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Clock, Ticket, Users } from "lucide-react";
 import { useCurrency } from "@/hooks/useCurrency";
+import { useLanguage } from "@/hooks/useLanguage";
 import type { Event } from "@/types";
 
 interface EventCardProps {
@@ -54,6 +55,7 @@ const categoryConfig: Record<string, { color: string; label: string }> = {
 
 export default function EventCard({ event }: EventCardProps) {
   const { convert } = useCurrency();
+  const { t } = useLanguage();
   const dateLabel = formatDate(event.start_date);
   const timeLabel = formatTime(event.start_date);
   const isNew     = isRecentlyAdded(event.created_at);
@@ -140,9 +142,9 @@ export default function EventCard({ event }: EventCardProps) {
             {cat.label}
           </span>
           {event.is_featured ? (
-            <span className="badge-popular">🔥 Vedette</span>
+            <span className="badge-popular">🔥 {t('vedette')}</span>
           ) : isNew ? (
-            <span className="badge-new"><span className="dot" />Nouveau</span>
+            <span className="badge-new"><span className="dot" />{t('nouveau')}</span>
           ) : null}
         </div>
 
@@ -198,7 +200,7 @@ export default function EventCard({ event }: EventCardProps) {
             )}
             {!standardTicket && !vipTicket && cheapestTicket && (
               <div className="flex-1 bg-[#F5E6C8] rounded-xl p-2.5 text-center">
-                <p className="text-[9px] text-[#8A6118] uppercase font-bold mb-0.5 tracking-wider">À partir de</p>
+                <p className="text-[9px] text-[#8A6118] uppercase font-bold mb-0.5 tracking-wider">{t('a_partir_de')}</p>
                 <p className="text-xs font-bold text-[#C8922A]">{convert(cheapestTicket.price)}</p>
               </div>
             )}
@@ -213,7 +215,7 @@ export default function EventCard({ event }: EventCardProps) {
                 <Users className="w-3 h-3" />
                 {remaining > 0 ? (
                   <span>
-                    <span className="font-semibold text-[#1A1A2E]">{remaining.toLocaleString("fr-FR")}</span> places
+                    <span className="font-semibold text-[#1A1A2E]">{remaining.toLocaleString("fr-FR")}</span> {t('places')}
                   </span>
                 ) : (
                   <span className="font-semibold text-[#C84B2F]">Complet</span>
@@ -237,7 +239,7 @@ export default function EventCard({ event }: EventCardProps) {
             }}
           >
             <Ticket className="w-3.5 h-3.5" />
-            Acheter des billets
+            {t('acheter_billets')}
           </button>
         </Link>
       </div>
