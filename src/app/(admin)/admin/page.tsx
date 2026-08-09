@@ -68,9 +68,10 @@ const MOCK_PAYMENTS: Payment[] = [
   { id: 4, user_id: 13, payable_type: "booking", payable_id: 4, amount: 120000, currency: "XOF", method: "wave", status: "completed", created_at: "2024-05-04T16:00:00Z", updated_at: "2024-05-04T16:00:00Z" },
 ];
 
-function fmt(n: unknown) {
-  const num = parseFloat(String(n ?? 0));
-  return new Intl.NumberFormat("fr-FR").format(isNaN(num) ? 0 : num);
+function fmt(n: unknown): string {
+  const num = Number(n);
+  if (!isFinite(num)) return "0";
+  return new Intl.NumberFormat("fr-FR").format(num);
 }
 
 function fmtDate(s: string) {
@@ -95,7 +96,13 @@ export default function DashboardPage() {
     getAdminStats().then((r) => setStats(r.data)).catch(() => {});
     getAdminProperties({ status: "pending", per_page: 3 }).then((r) => setPending(r.data.slice(0, 3))).catch(() => {});
     getAdminUsers({ per_page: 4, sort: "created_at_desc" }).then((r) => setUsers(r.data.slice(0, 4))).catch(() => {});
-    getAdminPayments({ per_page: 4, sort: "created_at_desc" }).then((r) => setPayments(r.data.slice(0, 4))).catch(() => {});
+    getAdminPayments({ per_page: 4, sort: "created_at_desc" }).then((r) => {
+      const mapped = r.data?.map((p: any) => ({
+        ...p,
+        amount: parseFloat(String(p.amount ?? p.total ?? p.price ?? 0)) || 0,
+      })) ?? [];
+      setPayments(mapped.slice(0, 4));
+    }).catch(() => {});
   }, []);
 
   const kpis = [

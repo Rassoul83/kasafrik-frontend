@@ -19,8 +19,10 @@ const MOCK: Payment[] = [
   { id: 8, user_id: 4, payable_type: "booking", payable_id: 8, amount: 350000, currency: "XOF", method: "wave", status: "refunded", transaction_id: "WAVE-2024-008", created_at: "2024-02-08T15:00:00Z", updated_at: "2024-02-08T15:00:00Z" },
 ];
 
-function fmt(n: number) {
-  return new Intl.NumberFormat("fr-FR").format(n);
+function fmt(n: unknown): string {
+  const num = Number(n);
+  if (!isFinite(num)) return "0";
+  return new Intl.NumberFormat("fr-FR").format(num);
 }
 
 function fmtDate(s: string) {
@@ -41,7 +43,13 @@ export default function AdminPaymentsPage() {
   const [methodFilter, setMethodFilter] = useState("");
 
   useEffect(() => {
-    getAdminPayments({ per_page: 50 }).then((r) => setPayments(r.data)).catch(() => {});
+    getAdminPayments({ per_page: 50 }).then((r) => {
+      const mapped = r.data?.map((p: any) => ({
+        ...p,
+        amount: parseFloat(String(p.amount ?? p.total ?? p.price ?? 0)) || 0,
+      })) ?? [];
+      setPayments(mapped);
+    }).catch(() => {});
   }, []);
 
   const filtered = payments.filter((p) => {
@@ -53,7 +61,10 @@ export default function AdminPaymentsPage() {
     return matchSearch && matchStatus && matchMethod;
   });
 
-  const totalRevenue = filtered.filter((p) => p.status === "completed").reduce((acc, p) => acc + p.amount, 0);
+  const totalRevenue = filtered.filter((p) => p.status === "completed").reduce((acc, p) => {
+    const amount = parseFloat(String(p.amount ?? 0));
+    return acc + (isNaN(amount) ? 0 : amount);
+  }, 0);
 
   return (
     <div className="space-y-5">
