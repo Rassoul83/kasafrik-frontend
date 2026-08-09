@@ -46,7 +46,7 @@ export default function AdminPaymentsPage() {
     getAdminPayments({ per_page: 50 }).then((r) => {
       const mapped = r.data?.map((p: any) => ({
         ...p,
-        amount: parseFloat(String(p.amount ?? p.total ?? p.price ?? 0)) || 0,
+        amount: (parseFloat(String(p.amount ?? p.total ?? p.price ?? 0)) || 0) * 1000,
       })) ?? [];
       setPayments(mapped);
     }).catch(() => {});
