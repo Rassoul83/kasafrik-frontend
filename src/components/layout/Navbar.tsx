@@ -6,17 +6,19 @@ import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import CurrencySelector from "./CurrencySelector";
 import LanguageSelector from "./LanguageSelector";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const navLinks = [
-  { label: "Immobilier",  href: "/immobilier"  },
-  { label: "Hôtels",      href: "/hotels"      },
-  { label: "Événements",  href: "/evenements"  },
-  { label: "Billetterie", href: "/billetterie" },
-];
+  { key: "immobilier",  href: "/immobilier"  },
+  { key: "hotels",      href: "/hotels"      },
+  { key: "evenements",  href: "/evenements"  },
+  { key: "billetterie", href: "/billetterie" },
+] as const;
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -59,7 +61,7 @@ export default function Navbar() {
                 href={link.href}
                 className="nav-link-dark px-4 py-2 text-[14px] font-medium text-gray-300 hover:text-[#E0A535] transition-colors duration-200 tracking-wide"
               >
-                {link.label}
+                {t(link.key)}
               </Link>
             ))}
           </div>
@@ -73,12 +75,12 @@ export default function Navbar() {
               href="/login"
               className="px-4 py-2 text-[13px] font-semibold text-[#C8922A] border border-[#C8922A]/40 rounded-[8px] hover:bg-[#C8922A]/8 hover:border-[#C8922A]/70 transition-all duration-200"
             >
-              Connexion
+              {t('connexion')}
             </Link>
             <div className="w-px h-4 bg-white/10" />
             <Link href="/publier">
               <button className="btn-gold px-5 py-2 text-[13px] tracking-wide">
-                + Publier
+                + {t('publier')}
               </button>
             </Link>
           </div>
@@ -112,7 +114,7 @@ export default function Navbar() {
               className="flex items-center gap-2 px-4 py-3 text-[14px] font-medium text-gray-300 hover:text-[#C8922A] hover:bg-white/4 rounded-lg transition-all duration-200 group"
             >
               <span className="w-0 h-px bg-[#C8922A] rounded group-hover:w-4 transition-all duration-200" />
-              {link.label}
+              {t(link.key)}
             </Link>
           ))}
 
@@ -122,11 +124,11 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className="block w-full text-center px-4 py-2.5 text-[13px] font-medium text-gray-300 border border-white/12 rounded-lg hover:border-[#C8922A]/50 hover:text-[#C8922A] transition-all duration-200"
             >
-              Connexion
+              {t('connexion')}
             </Link>
             <Link href="/publier" onClick={() => setMenuOpen(false)}>
               <button className="btn-gold w-full py-3 text-[13px] tracking-wide">
-                + Publier une annonce
+                + {t('publier_annonce')}
               </button>
             </Link>
           </div>

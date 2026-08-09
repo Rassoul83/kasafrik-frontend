@@ -10,6 +10,7 @@ import {
   TrendingUp,
   ArrowRight,
 } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const slides = [
   {
@@ -71,12 +72,14 @@ const slides = [
 ];
 
 function SearchBar() {
+  const { t } = useLanguage();
+
   return (
     <div className="searchbar-premium p-5 md:p-7 max-w-4xl mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
           <label className="block text-[11px] font-bold text-[#7A7265] mb-2 uppercase tracking-widest">
-            Ville
+            {t('ville')}
           </label>
           <div className="relative">
             <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#C8922A]" />
@@ -102,7 +105,7 @@ function SearchBar() {
 
         <div>
           <label className="block text-[11px] font-bold text-[#7A7265] mb-2 uppercase tracking-widest">
-            Budget max
+            {t('budget')}
           </label>
           <select className="input-premium w-full px-3 py-2.5 text-sm bg-white">
             <option value="">Pas de limite</option>
@@ -117,7 +120,7 @@ function SearchBar() {
         <div className="flex items-end">
           <button className="btn-gold w-full flex items-center justify-center gap-2 py-2.5 px-4 text-sm">
             <Search className="w-4 h-4" />
-            Rechercher
+            {t('rechercher')}
           </button>
         </div>
       </div>
@@ -128,6 +131,7 @@ function SearchBar() {
 export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const { t } = useLanguage();
 
   const next = useCallback(
     () => setCurrent((c) => (c + 1) % slides.length),
@@ -247,11 +251,7 @@ export default function HeroSlider() {
 
           {/* Fixed main title */}
           <h1 className="font-playfair animate-fade-in-up text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.12] mb-6 max-w-4xl mx-auto delay-100">
-            <span className="text-white">La référence </span>
-            <span className="gold-shimmer-text">immobilière</span>
-            <span className="text-white"> &amp; </span>
-            <span className="gold-shimmer-text">événementielle</span>
-            <span className="text-white"> en Afrique</span>
+            <span className="text-white">{t('reference')}</span>
           </h1>
 
           {/* Slide subtitle — fades with slide change */}
@@ -272,7 +272,7 @@ export default function HeroSlider() {
             </Link>
             <Link href="/publier">
               <button className="btn-outline-gold px-8 py-4 text-base">
-                Publier une annonce
+                {t('publier_annonce')}
               </button>
             </Link>
           </div>

@@ -19,6 +19,7 @@ import PropertyCard from "@/components/cards/PropertyCard";
 import EventCard from "@/components/cards/EventCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import HeroSlider from "@/components/ui/HeroSlider";
+import Translate from "@/components/ui/Translate";
 import type { Property, Event } from "@/types";
 
 // ── API types (raw backend shape) ───────────────────────────────────────────
@@ -438,13 +439,13 @@ export default function HomePage() {
               <p className="text-[11px] font-bold text-[#C8922A] uppercase tracking-widest mb-2">
                 Immobilier
               </p>
-              <h2 className="section-title">Annonces récentes</h2>
+              <h2 className="section-title"><Translate k="annonces_recentes" /></h2>
               <p className="section-subtitle mt-1.5">
                 Villas, appartements, studios — trouvez votre logement idéal
               </p>
             </div>
             <Link href="/immobilier" className="voir-tout-link hidden md:inline-flex">
-              Voir tout <span>→</span>
+              <Translate k="voir_tout" /> <span>→</span>
             </Link>
           </div>
 
@@ -482,13 +483,13 @@ export default function HomePage() {
               <p className="text-[11px] font-bold text-[#C8922A] uppercase tracking-widest mb-2">
                 Billetterie
               </p>
-              <h2 className="section-title-light">Événements à venir</h2>
+              <h2 className="section-title-light"><Translate k="evenements_venir" /></h2>
               <p className="text-[15px] text-gray-500 mt-1.5 leading-relaxed">
                 Concerts, festivals, forums, soirées — ne ratez rien
               </p>
             </div>
             <Link href="/evenements" className="voir-tout-link-light hidden md:inline-flex">
-              Voir tout <span>→</span>
+              <Translate k="voir_tout" /> <span>→</span>
             </Link>
           </div>
 
@@ -663,7 +664,7 @@ export default function HomePage() {
                   background: "rgba(255,255,255,0.08)",
                 }}
               >
-                Explorer les annonces
+                <Translate k="explorer" />
               </button>
             </Link>
           </div>

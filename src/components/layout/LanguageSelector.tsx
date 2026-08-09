@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { LANGUAGE_CHANGE_EVENT } from "@/hooks/useLanguage";
 
 const LANGUAGES = [
   { code: "fr", label: "🇫🇷 Français", name: "Français" },
@@ -39,6 +40,7 @@ export default function LanguageSelector() {
     setSelected(code);
     setOpen(false);
     localStorage.setItem(STORAGE_KEY, code);
+    window.dispatchEvent(new CustomEvent(LANGUAGE_CHANGE_EVENT, { detail: code }));
   };
 
   return (

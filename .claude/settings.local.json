@@ -14,7 +14,9 @@
       "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('next:', p.dependencies.next, '\\\\nreact:', p.dependencies.react\\)\")",
       "Bash(node -e \"const l=require\\('lucide-react'\\); const keys=Object.keys\\(l\\); console.log\\(keys.filter\\(k=>k.toLowerCase\\(\\).includes\\('twitter'\\)||k.toLowerCase\\(\\).includes\\('x '\\)\\)\\)\")",
       "Bash(node -e \"const l=require\\('lucide-react'\\); const keys=Object.keys\\(l\\); console.log\\(keys.filter\\(k=>k.toLowerCase\\(\\).includes\\('face'\\)||k.toLowerCase\\(\\).includes\\('share'\\)\\)\\)\")",
-      "Bash(Select-Object Name)"
+      "Bash(Select-Object Name)",
+      "Bash(npx eslint *)",
+      "Bash(git stash *)"
     ]
   }
 }
