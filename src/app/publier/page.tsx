@@ -13,6 +13,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Badge from "@/components/ui/Badge";
 import { createProperty, createEvent } from "@/lib/api";
+import { CITY_GROUPS } from "@/lib/locations";
 
 type PublishType = "property" | "event" | null;
 type Step = 1 | 2 | 3;
@@ -42,7 +43,6 @@ interface EventForm {
   end_date: string;
 }
 
-const CITIES = ["Dakar", "Thiès", "Saint-Louis", "Ziguinchor", "Saly", "Mbour", "Kaolack", "Abidjan", "Bamako"];
 const PROPERTY_CATEGORIES = ["villa", "apartment", "house", "studio", "office", "land", "hotel_room"];
 const EVENT_CATEGORIES = ["musique", "business", "culture", "sport", "match", "gastronomie", "mode", "éducation", "autre"];
 
@@ -318,7 +318,11 @@ export default function PublierPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">Ville *</label>
                     <select value={propForm.city} onChange={(e) => updateProp("city", e.target.value)} className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#C8922A] bg-white">
-                      {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                      {CITY_GROUPS.map((group) => (
+                        <optgroup key={group.label} label={group.label}>
+                          {group.cities.map((c) => <option key={c} value={c}>{c}</option>)}
+                        </optgroup>
+                      ))}
                     </select>
                   </div>
                   <Input label="Adresse / Quartier *" placeholder="Ex: Almadies" value={propForm.address} onChange={(e) => updateProp("address", e.target.value)} icon={<MapPin className="w-4 h-4" />} required />
@@ -354,7 +358,11 @@ export default function PublierPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1.5">Ville *</label>
                     <select value={evtForm.city} onChange={(e) => updateEvt("city", e.target.value)} className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#C8922A] bg-white">
-                      {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                      {CITY_GROUPS.map((group) => (
+                        <optgroup key={group.label} label={group.label}>
+                          {group.cities.map((c) => <option key={c} value={c}>{c}</option>)}
+                        </optgroup>
+                      ))}
                     </select>
                   </div>
                 </div>
