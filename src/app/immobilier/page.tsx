@@ -14,6 +14,7 @@ import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 import { SkeletonCard } from "@/components/ui/Skeleton";
 import { getProperties } from "@/lib/api";
+import { useLanguage } from "@/hooks/useLanguage";
 import type { Property } from "@/types";
 
 // ── Données de secours ────────────────────────────────────────────────────────
@@ -34,13 +35,6 @@ const MOCK: Property[] = [
 
 const CITIES = ["Dakar", "Thiès", "Saint-Louis", "Ziguinchor", "Saly", "Mbour", "Abidjan"];
 
-const TYPES = [
-  { value: "", label: "Vente & Location" },
-  { value: "sale", label: "Vente" },
-  { value: "rent", label: "Location longue durée" },
-  { value: "court_sejour", label: "Court séjour" },
-];
-
 const CATEGORIES = [
   { value: "", label: "Tous types" },
   { value: "villa", label: "Villa" },
@@ -56,6 +50,14 @@ const PER_PAGE = 9;
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function ImmobilierPage() {
+  const { t } = useLanguage();
+  const TYPES = [
+    { value: "", label: t('vente_location') },
+    { value: "sale", label: t('vente') },
+    { value: "rent", label: t('location') },
+    { value: "court_sejour", label: t('court_sejour') },
+  ];
+
   const [properties, setProperties] = useState<Property[]>(MOCK);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -145,10 +147,10 @@ export default function ImmobilierPage() {
       <section className="bg-[#1A1A2E] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
-            Immobilier en <span className="text-[#C8922A]">Afrique</span>
+            {t('immobilier_titre')}
           </h1>
           <p className="text-gray-400 mb-6">
-            {totalCount.toLocaleString("fr-FR")} annonce{totalCount > 1 ? "s" : ""} disponible{totalCount > 1 ? "s" : ""}
+            {totalCount.toLocaleString("fr-FR")} {t('annonces_disponibles')}
           </p>
 
           {/* Barre de recherche principale */}
@@ -173,7 +175,7 @@ export default function ImmobilierPage() {
               onChange={(e) => applyFilter(setCity)(e.target.value)}
               className="px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#C8922A] bg-white"
             >
-              <option value="">Toutes les villes</option>
+              <option value="">{t('toutes_villes')}</option>
               {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             <Button
@@ -183,7 +185,7 @@ export default function ImmobilierPage() {
               className="gap-2 border border-gray-200 shrink-0"
             >
               <SlidersHorizontal className="w-4 h-4" />
-              Filtres
+              {t('filtres')}
               {hasFilters && <span className="w-2 h-2 rounded-full bg-[#C8922A]" />}
             </Button>
           </div>
@@ -306,7 +308,7 @@ export default function ImmobilierPage() {
               )}
             </p>
             <Link href="/publier">
-              <Button variant="primary" size="sm">+ Publier une annonce</Button>
+              <Button variant="primary" size="sm">+ {t('publier_annonce')}</Button>
             </Link>
           </div>
 

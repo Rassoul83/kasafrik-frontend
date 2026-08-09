@@ -9,6 +9,8 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { SkeletonCard } from "@/components/ui/Skeleton";
 import { getEvents } from "@/lib/api";
+import { useLanguage } from "@/hooks/useLanguage";
+import { translations } from "@/lib/i18n";
 import type { Event } from "@/types";
 
 const MOCK: Event[] = [
@@ -27,7 +29,12 @@ const CATEGORIES = ["Tous", "musique", "business", "culture", "sport", "match"];
 const CITIES = ["Toutes les villes", "Dakar", "Abidjan", "Saint-Louis", "Thiès"];
 const PER_PAGE = 8;
 
+function hasTranslation(key: string): key is keyof typeof translations.fr {
+  return key in translations.fr;
+}
+
 export default function EvenementsPage() {
+  const { t } = useLanguage();
   const [events, setEvents] = useState<Event[]>(MOCK);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -66,7 +73,7 @@ export default function EvenementsPage() {
       <section className="bg-[#1A1A2E] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
-            Événements en <span className="text-[#C8922A]">Afrique</span>
+            {t('evenements_titre')}
           </h1>
           <p className="text-gray-400 mb-6">Concerts, forums, festivals, expositions — ne ratez rien</p>
 
@@ -84,7 +91,7 @@ export default function EvenementsPage() {
               onChange={(e) => { setCity(e.target.value); setPage(1); }}
               className="px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#C8922A] bg-white"
             >
-              {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              {CITIES.map((c) => <option key={c} value={c}>{c === "Toutes les villes" ? t('toutes_villes') : c}</option>)}
             </select>
           </div>
         </div>
@@ -105,7 +112,7 @@ export default function EvenementsPage() {
                     : "text-gray-600 hover:bg-[#F5E6C8] hover:text-[#C8922A]",
                 ].join(" ")}
               >
-                {cat === "Tous" ? "Tous" : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                {cat === "Tous" ? t('tous') : hasTranslation(cat) ? t(cat) : cat.charAt(0).toUpperCase() + cat.slice(1)}
               </button>
             ))}
           </div>

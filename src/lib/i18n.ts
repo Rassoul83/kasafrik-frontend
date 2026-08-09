@@ -40,6 +40,15 @@ export const translations = {
     vedette: "Vedette",
     a_partir_de: "À partir de",
     places: "places",
+    // Filtres & listes
+    vente_location: "Vente & Location",
+    toutes_villes: "Toutes les villes",
+    filtres: "Filtres",
+    populaire: "Populaire",
+    annonces_disponibles: "annonces disponibles",
+    reserver: "Réserver",
+    tous: "Tous",
+    hebergements_disponibles: "hébergements disponibles",
     // Mois
     janvier: "Janvier", fevrier: "Février", mars: "Mars", avril: "Avril",
     mai: "Mai", juin: "Juin", juillet: "Juillet", aout: "Août",
@@ -178,6 +187,15 @@ export const translations = {
     vedette: "Featured",
     a_partir_de: "From",
     places: "seats",
+    // Filters & listings
+    vente_location: "Sale & Rental",
+    toutes_villes: "All cities",
+    filtres: "Filters",
+    populaire: "Popular",
+    annonces_disponibles: "listings available",
+    reserver: "Book",
+    tous: "All",
+    hebergements_disponibles: "accommodations available",
     // Months
     janvier: "January", fevrier: "February", mars: "March", avril: "April",
     mai: "May", juin: "June", juillet: "July", aout: "August",
@@ -316,6 +334,15 @@ export const translations = {
     vedette: "مميز",
     a_partir_de: "ابتداءً من",
     places: "مقاعد",
+    // الفلاتر والقوائم
+    vente_location: "بيع وإيجار",
+    toutes_villes: "جميع المدن",
+    filtres: "الفلاتر",
+    populaire: "شائع",
+    annonces_disponibles: "إعلان متاح",
+    reserver: "احجز",
+    tous: "الكل",
+    hebergements_disponibles: "مكان إقامة متاح",
     // الأشهر
     janvier: "يناير", fevrier: "فبراير", mars: "مارس", avril: "أبريل",
     mai: "مايو", juin: "يونيو", juillet: "يوليو", aout: "أغسطس",

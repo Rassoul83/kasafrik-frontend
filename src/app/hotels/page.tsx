@@ -11,6 +11,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { SkeletonCard } from "@/components/ui/Skeleton";
 import { getProperties } from "@/lib/api";
+import { useLanguage } from "@/hooks/useLanguage";
 import type { Property } from "@/types";
 
 interface Hotel extends Property {
@@ -54,6 +55,7 @@ function StarRating({ count }: { count: number }) {
 }
 
 export default function HotelsPage() {
+  const { t } = useLanguage();
   const [hotels, setHotels] = useState<Hotel[]>(MOCK_HOTELS);
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -96,7 +98,7 @@ export default function HotelsPage() {
       <section className="bg-[#1A1A2E] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
-            Hôtels & <span className="text-[#C8922A]">Guesthouses</span>
+            {t('hotels_titre')}
           </h1>
           <p className="text-gray-400 mb-6">Réservez votre hébergement idéal partout en Afrique de l&apos;Ouest</p>
 
@@ -146,7 +148,7 @@ export default function HotelsPage() {
               onChange={(e) => { setCity(e.target.value); setPage(1); }}
               className="px-3 py-2 border border-gray-200 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#C8922A]"
             >
-              <option value="">Toutes les villes</option>
+              <option value="">{t('toutes_villes')}</option>
               {CITIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             <select
@@ -172,7 +174,7 @@ export default function HotelsPage() {
           )}
 
           <p className="text-sm text-gray-500 mb-6">
-            <strong className="text-[#1A1A2E]">{filtered.length}</strong> hébergement{filtered.length > 1 ? "s" : ""} disponible{filtered.length > 1 ? "s" : ""}
+            <strong className="text-[#1A1A2E]">{filtered.length}</strong> {t('hebergements_disponibles')}
           </p>
 
           {loading ? (
@@ -252,7 +254,7 @@ export default function HotelsPage() {
                           <p className="text-xs text-gray-400">/nuit</p>
                         </div>
                         <Link href={`/hotels/${hotel.id}`}>
-                          <Button variant="primary" size="sm">Réserver</Button>
+                          <Button variant="primary" size="sm">{t('reserver')}</Button>
                         </Link>
                       </div>
                     </div>

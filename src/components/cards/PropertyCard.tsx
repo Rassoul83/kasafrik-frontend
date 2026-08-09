@@ -119,11 +119,11 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         {/* Featured / Nouveau */}
         {property.is_featured ? (
           <div className="absolute top-3 right-3">
-            <span className="badge-popular">🔥 Populaire</span>
+            <span className="badge-popular">🔥 {t('populaire')}</span>
           </div>
         ) : isNew ? (
           <div className="absolute top-3 right-3">
-            <span className="badge-new"><span className="dot" />Nouveau</span>
+            <span className="badge-new"><span className="dot" />{t('nouveau')}</span>
           </div>
         ) : null}
 
@@ -190,7 +190,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         {/* CTA */}
         <Link href={`/immobilier/${property.id}`}>
           <button className={`w-full flex items-center justify-center gap-2 py-2.5 text-sm font-semibold rounded-[8px] group/btn btn-property-${property.type}`}>
-            Voir l&apos;annonce
+            {t('voir_annonce')}
             <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
           </button>
         </Link>

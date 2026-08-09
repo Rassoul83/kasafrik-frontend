@@ -14,6 +14,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Card from "@/components/ui/Card";
 import { getEvents, getMyTickets } from "@/lib/api";
+import { useLanguage } from "@/hooks/useLanguage";
 import type { Event, Ticket as TicketType } from "@/types";
 
 const MOCK_EVENTS: Event[] = [
@@ -27,15 +28,6 @@ const MOCK_EVENTS: Event[] = [
 const MOCK_TICKETS: TicketType[] = [
   { id: 1, user_id: 1, event_id: 1, ticket_type_id: 1, qr_code: "QR-KAS-001-2024", status: "valid", quantity: 2, total_price: 30000, event: MOCK_EVENTS[0], ticket_type: { id: 1, event_id: 1, name: "Standard", price: 15000, quantity: 500, sold: 230, is_available: true }, created_at: "2024-02-01T10:00:00Z", updated_at: "2024-02-01T10:00:00Z" },
   { id: 2, user_id: 1, event_id: 6, ticket_type_id: 10, qr_code: "QR-KAS-002-2024", status: "valid", quantity: 1, total_price: 12000, event: MOCK_EVENTS[3], ticket_type: { id: 10, event_id: 6, name: "Standard", price: 12000, quantity: 5000, sold: 2340, is_available: true }, created_at: "2024-03-01T10:00:00Z", updated_at: "2024-03-01T10:00:00Z" },
-];
-
-const CATEGORIES = [
-  { id: "all", label: "Tous" },
-  { id: "musique", label: "Musique" },
-  { id: "business", label: "Business" },
-  { id: "culture", label: "Culture" },
-  { id: "sport", label: "Sport" },
-  { id: "match", label: "Match" },
 ];
 
 // BUG FIX: garde contre NaN/Invalid Date
@@ -90,6 +82,16 @@ function EventRowSkeleton() {
 }
 
 export default function BilletteriePage() {
+  const { t } = useLanguage();
+  const CATEGORIES = [
+    { id: "all", label: t('tous') },
+    { id: "musique", label: t('musique') },
+    { id: "business", label: t('business') },
+    { id: "culture", label: t('culture') },
+    { id: "sport", label: t('sport') },
+    { id: "match", label: t('match') },
+  ];
+
   const [events, setEvents] = useState<Event[]>(MOCK_EVENTS);
   const [loading, setLoading] = useState(false);
   const [myTickets, setMyTickets] = useState<TicketType[]>([]);
@@ -135,7 +137,7 @@ export default function BilletteriePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 mb-3">
             <Ticket className="w-8 h-8 text-[#C8922A]" />
-            <h1 className="text-3xl md:text-4xl font-extrabold text-white">Billetterie</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-white">{t('billetterie_titre')}</h1>
           </div>
           <p className="text-gray-400 mb-6">Achetez vos billets QR et accédez à vos événements en toute sécurité</p>
 
@@ -299,7 +301,7 @@ export default function BilletteriePage() {
                                   <Link href={`/billetterie/${ev.id}`}>
                                     <Button variant="primary" size="sm" className="gap-1.5">
                                       <Ticket className="w-3.5 h-3.5" />
-                                      Acheter
+                                      {t('acheter_billets')}
                                     </Button>
                                   </Link>
                                 </div>
