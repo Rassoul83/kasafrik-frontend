@@ -5,17 +5,23 @@ import Image from "next/image";
 import { MapPin, Bed, Bath, Maximize, ArrowRight } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 import { useCurrency } from "@/hooks/useCurrency";
+import { useLanguage } from "@/hooks/useLanguage";
+import { translations } from "@/lib/i18n";
 import type { Property } from "@/types";
 
 interface PropertyCardProps {
   property: Property;
 }
 
-const typeLabels: Record<string, { label: string; variant: "gold" | "green" | "red" }> = {
-  sale:  { label: "Vente",    variant: "gold"  },
-  rent:  { label: "Location", variant: "green" },
-  hotel: { label: "Hôtel",    variant: "red"   },
+const typeKeys: Record<string, { key: "vente" | "location" | "court_sejour"; variant: "gold" | "green" | "red" }> = {
+  sale:  { key: "vente",        variant: "gold"  },
+  rent:  { key: "location",     variant: "green" },
+  hotel: { key: "court_sejour", variant: "red"   },
 };
+
+function hasTranslation(key: string): key is keyof typeof translations.fr {
+  return key in translations.fr;
+}
 
 const typeBorder: Record<string, string> = {
   sale:  "#C8922A",
@@ -31,7 +37,12 @@ function isRecentlyAdded(dateStr: string): boolean {
 
 export default function PropertyCard({ property }: PropertyCardProps) {
   const { convert }  = useCurrency();
-  const typeInfo    = typeLabels[property.type] ?? { label: property.type, variant: "gold" as const };
+  const { t }        = useLanguage();
+  const typeEntry    = typeKeys[property.type];
+  const typeLabel    = typeEntry ? t(typeEntry.key) : property.type;
+  const typeVariant  = typeEntry?.variant ?? "gold";
+  const catKey       = property.category?.toLowerCase() ?? "";
+  const catLabel     = hasTranslation(catKey) ? t(catKey) : (property.category ?? "");
   const isNew       = isRecentlyAdded(property.created_at);
   const borderColor = typeBorder[property.type] ?? "#C8922A";
   // Cherche d'abord l'image marquée primaire, sinon la première du tableau
@@ -87,10 +98,22 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Badge type */}
-        <div className="absolute top-3 left-3">
-          <Badge variant={typeInfo.variant as "gold" | "green" | "red" | "blue" | "gray" | "purple"}>
-            {typeInfo.label}
+        <div className="absolute top-3 left-3 flex items-center gap-1.5">
+          <Badge variant={typeVariant as "gold" | "green" | "red" | "blue" | "gray" | "purple"}>
+            {typeLabel}
           </Badge>
+          {catLabel && (
+            <span
+              className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full text-white"
+              style={{
+                background: "rgba(0,0,0,0.40)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.15)",
+              }}
+            >
+              {catLabel}
+            </span>
+          )}
         </div>
 
         {/* Featured / Nouveau */}

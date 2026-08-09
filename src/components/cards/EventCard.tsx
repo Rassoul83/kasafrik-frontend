@@ -5,32 +5,31 @@ import Image from "next/image";
 import { MapPin, Clock, Ticket, Users } from "lucide-react";
 import { useCurrency } from "@/hooks/useCurrency";
 import { useLanguage } from "@/hooks/useLanguage";
+import { translations } from "@/lib/i18n";
 import type { Event } from "@/types";
 
 interface EventCardProps {
   event: Event;
 }
 
-function formatDate(dateStr: string): string {
-  if (!dateStr) return "Date à venir";
-  try {
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return "Date à venir";
-    return d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
-  } catch {
-    return "Date à venir";
-  }
+const localeMap: Record<string, string> = { fr: "fr-FR", en: "en-US", ar: "ar-SA" };
+
+function formatDate(dateStr: string, lang: string): string {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return "";
+  return date.toLocaleDateString(localeMap[lang] ?? "fr-FR", { day: "numeric", month: "short" });
 }
 
-function formatTime(dateStr: string): string {
+function formatTime(dateStr: string, lang: string): string {
   if (!dateStr) return "—";
-  try {
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return "—";
-    return d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
-  } catch {
-    return "—";
-  }
+  const date = new Date(dateStr);
+  if (isNaN(date.getTime())) return "—";
+  return date.toLocaleTimeString(localeMap[lang] ?? "fr-FR", { hour: "2-digit", minute: "2-digit" });
+}
+
+function hasTranslation(key: string): key is keyof typeof translations.fr {
+  return key in translations.fr;
 }
 
 function isRecentlyAdded(dateStr: string): boolean {
@@ -39,29 +38,29 @@ function isRecentlyAdded(dateStr: string): boolean {
   return diffDays < 14;
 }
 
-const categoryConfig: Record<string, { color: string; label: string }> = {
-  musique:    { color: "#C8922A", label: "Musique"    },
-  concert:    { color: "#C8922A", label: "Concert"    },
-  business:   { color: "#4A7C59", label: "Business"   },
-  sport:      { color: "#8A6118", label: "Sport"       },
-  football:   { color: "#8A6118", label: "Football"   },
-  festival:   { color: "#C84B2F", label: "Festival"   },
-  culture:    { color: "#C84B2F", label: "Culture"    },
-  kermesse:   { color: "#E0A535", label: "Kermesse"   },
-  conference: { color: "#4A7C59", label: "Conférence" },
-  tech:       { color: "#7A7265", label: "Tech"        },
-  match:      { color: "#8A6118", label: "Match"      },
+const categoryColors: Record<string, string> = {
+  musique:    "#C8922A",
+  concert:    "#C8922A",
+  business:   "#4A7C59",
+  sport:      "#8A6118",
+  football:   "#8A6118",
+  festival:   "#C84B2F",
+  culture:    "#C84B2F",
+  kermesse:   "#E0A535",
+  conference: "#4A7C59",
+  tech:       "#7A7265",
+  match:      "#8A6118",
 };
 
 export default function EventCard({ event }: EventCardProps) {
   const { convert } = useCurrency();
-  const { t } = useLanguage();
-  const dateLabel = formatDate(event.start_date);
-  const timeLabel = formatTime(event.start_date);
+  const { t, lang } = useLanguage();
+  const dateLabel = formatDate(event.start_date, lang);
+  const timeLabel = formatTime(event.start_date, lang);
   const isNew     = isRecentlyAdded(event.created_at);
   const catKey    = event.category?.toLowerCase() ?? "";
-  const cat       = categoryConfig[catKey] ?? { color: "#C8922A", label: event.category ?? "" };
-  const catColor  = cat.color;
+  const catColor  = categoryColors[catKey] ?? "#C8922A";
+  const catLabel  = hasTranslation(catKey) ? t(catKey) : (event.category ?? "");
 
   const standardTicket = event.ticket_types?.find(
     (t) => t.name.toLowerCase().includes("standard") || t.name.toLowerCase().includes("normal") || t.name.toLowerCase().includes("populaire") || t.name.toLowerCase().includes("journée")
@@ -139,7 +138,7 @@ export default function EventCard({ event }: EventCardProps) {
               border: `1px solid rgba(255,255,255,0.15)`,
             }}
           >
-            {cat.label}
+            {catLabel}
           </span>
           {event.is_featured ? (
             <span className="badge-popular">🔥 {t('vedette')}</span>

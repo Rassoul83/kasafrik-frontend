@@ -40,6 +40,19 @@ export const translations = {
     vedette: "Vedette",
     a_partir_de: "À partir de",
     places: "places",
+    // Mois
+    janvier: "Janvier", fevrier: "Février", mars: "Mars", avril: "Avril",
+    mai: "Mai", juin: "Juin", juillet: "Juillet", aout: "Août",
+    septembre: "Septembre", octobre: "Octobre", novembre: "Novembre", decembre: "Décembre",
+    // Catégories événements
+    festival: "Festival", concert: "Concert", kermesse: "Kermesse",
+    football: "Football", conference: "Conférence", sport: "Sport",
+    match: "Match", musique: "Musique", culture: "Culture", business: "Business",
+    tech: "Tech", gastronomie: "Gastronomie", mode: "Mode", "éducation": "Éducation", autre: "Autre",
+    // Catégories immobilier
+    villa: "Villa", appartement: "Appartement", apartment: "Appartement",
+    terrain: "Terrain", land: "Terrain", bureau: "Bureau", office: "Bureau",
+    commerce: "Commerce", studio: "Studio", house: "Maison", hotel_room: "Chambre d'hôtel",
     // Footer
     a_propos: "À propos",
     contact: "Contact",
@@ -165,6 +178,19 @@ export const translations = {
     vedette: "Featured",
     a_partir_de: "From",
     places: "seats",
+    // Months
+    janvier: "January", fevrier: "February", mars: "March", avril: "April",
+    mai: "May", juin: "June", juillet: "July", aout: "August",
+    septembre: "September", octobre: "October", novembre: "November", decembre: "December",
+    // Event categories
+    festival: "Festival", concert: "Concert", kermesse: "Fair",
+    football: "Football", conference: "Conference", sport: "Sport",
+    match: "Match", musique: "Music", culture: "Culture", business: "Business",
+    tech: "Tech", gastronomie: "Gastronomy", mode: "Fashion", "éducation": "Education", autre: "Other",
+    // Real estate categories
+    villa: "Villa", appartement: "Apartment", apartment: "Apartment",
+    terrain: "Land", land: "Land", bureau: "Office", office: "Office",
+    commerce: "Commercial", studio: "Studio", house: "House", hotel_room: "Hotel room",
     // Footer
     a_propos: "About",
     contact: "Contact",
@@ -290,6 +316,19 @@ export const translations = {
     vedette: "مميز",
     a_partir_de: "ابتداءً من",
     places: "مقاعد",
+    // الأشهر
+    janvier: "يناير", fevrier: "فبراير", mars: "مارس", avril: "أبريل",
+    mai: "مايو", juin: "يونيو", juillet: "يوليو", aout: "أغسطس",
+    septembre: "سبتمبر", octobre: "أكتوبر", novembre: "نوفمبر", decembre: "ديسمبر",
+    // فئات الفعاليات
+    festival: "مهرجان", concert: "حفلة موسيقية", kermesse: "كرمس",
+    football: "كرة القدم", conference: "مؤتمر", sport: "رياضة",
+    match: "مباراة", musique: "موسيقى", culture: "ثقافة", business: "أعمال",
+    tech: "تقنية", gastronomie: "فن الطهي", mode: "موضة", "éducation": "تعليم", autre: "أخرى",
+    // فئات العقارات
+    villa: "فيلا", appartement: "شقة", apartment: "شقة",
+    terrain: "أرض", land: "أرض", bureau: "مكتب", office: "مكتب",
+    commerce: "تجاري", studio: "استوديو", house: "منزل", hotel_room: "غرفة فندق",
     // التذييل
     a_propos: "من نحن",
     contact: "اتصل بنا",
