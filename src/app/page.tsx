@@ -21,6 +21,9 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import HeroSlider from "@/components/ui/HeroSlider";
 import Translate from "@/components/ui/Translate";
 import type { Property, Event } from "@/types";
+import type { translations } from "@/lib/i18n";
+
+type TranslationKey = keyof typeof translations.fr;
 
 // ── API types (raw backend shape) ───────────────────────────────────────────
 
@@ -251,7 +254,7 @@ function EmptyState({
   icon: Icon,
   dark = false,
 }: {
-  message: string;
+  message: React.ReactNode;
   icon: React.ElementType;
   dark?: boolean;
 }) {
@@ -285,7 +288,7 @@ async function PropertiesSection() {
   if (properties.length === 0) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <EmptyState message="Aucune annonce disponible" icon={Home} />
+        <EmptyState message={<Translate k="aucune_annonce" />} icon={Home} />
       </div>
     );
   }
@@ -307,7 +310,7 @@ async function EventsSection() {
   if (events.length === 0) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <EmptyState message="Aucun événement disponible" icon={Calendar} dark />
+        <EmptyState message={<Translate k="aucun_evenement" />} icon={Calendar} dark />
       </div>
     );
   }
@@ -324,42 +327,42 @@ async function EventsSection() {
 }
 
 /* Stats — palette africaine chaude */
-const stats = [
-  { value: "1 200+",  label: "Annonces actives",     icon: Home,     iconColor: "#C8922A", shadowColor: "rgba(200,146,42,0.35)"  },
-  { value: "85+",     label: "Hôtels & Guesthouses",  icon: Building2, iconColor: "#4A7C59", shadowColor: "rgba(74,124,89,0.35)"  },
-  { value: "500+",    label: "Événements publiés",    icon: Calendar, iconColor: "#C84B2F", shadowColor: "rgba(200,75,47,0.35)"  },
-  { value: "15 000+", label: "Utilisateurs inscrits", icon: Star,     iconColor: "#E0A535", shadowColor: "rgba(224,165,53,0.35)"  },
+const stats: { value: string; labelKey: TranslationKey; icon: React.ElementType; iconColor: string; shadowColor: string }[] = [
+  { value: "1 200+",  labelKey: "stat_annonces_actives",     icon: Home,     iconColor: "#C8922A", shadowColor: "rgba(200,146,42,0.35)"  },
+  { value: "85+",     labelKey: "stat_hotels_guesthouses",   icon: Building2, iconColor: "#4A7C59", shadowColor: "rgba(74,124,89,0.35)"  },
+  { value: "500+",    labelKey: "stat_evenements_publies",   icon: Calendar, iconColor: "#C84B2F", shadowColor: "rgba(200,75,47,0.35)"  },
+  { value: "15 000+", labelKey: "stat_utilisateurs_inscrits", icon: Star,     iconColor: "#E0A535", shadowColor: "rgba(224,165,53,0.35)"  },
 ];
 
 /* Modules — palette chaude uniquement */
-const modules = [
+const modules: { titleKey: TranslationKey; descKey: TranslationKey; icon: React.ElementType; href: string; color: string; bg: string }[] = [
   {
-    title: "Immobilier",
-    desc:  "Achetez ou louez appartements, villas, studios dans toute l'Afrique.",
+    titleKey: "immobilier",
+    descKey:  "immobilier_desc",
     icon:  Home,
     href:  "/immobilier",
     color: "#C8922A",
     bg:    "#F5E6C8",
   },
   {
-    title: "Hôtels & Guesthouses",
-    desc:  "Réservez votre hébergement idéal partout en Afrique de l'Ouest.",
+    titleKey: "hotels",
+    descKey:  "hotels_desc",
     icon:  Building2,
     href:  "/hotels",
     color: "#4A7C59",
     bg:    "#D6EDE0",
   },
   {
-    title: "Billetterie",
-    desc:  "Achetez vos billets QR pour concerts, festivals et événements.",
+    titleKey: "billetterie",
+    descKey:  "billetterie_desc",
     icon:  Ticket,
     href:  "/billetterie",
     color: "#C84B2F",
     bg:    "#FAE8E3",
   },
   {
-    title: "Événements",
-    desc:  "Découvrez et organisez des événements mémorables en Afrique.",
+    titleKey: "evenements",
+    descKey:  "evenements_desc",
     icon:  Calendar,
     href:  "/evenements",
     color: "#8A6118",
@@ -368,20 +371,20 @@ const modules = [
 ];
 
 /* Garanties — palette africaine chaude */
-const trustItems = [
-  { icon: CheckCircle,    title: "Annonces vérifiées",  desc: "Modération manuelle et badge Vérifié pour les propriétaires identifiés.", color: "#4A7C59"  },
-  { icon: Shield,         title: "Paiement sécurisé",   desc: "Wave, Orange Money, Stripe, PayPal. Argent conservé jusqu'à confirmation.", color: "#C8922A"  },
-  { icon: Globe,          title: "Géolocalisation",     desc: "Trouvez des biens et événements autour de vous via la carte interactive.", color: "#C84B2F"  },
-  { icon: HeadphonesIcon, title: "Support 7j/7",        desc: "Notre équipe est disponible 7 jours sur 7 pour vous accompagner.", color: "#8A6118"  },
-  { icon: QrCode,         title: "QR Code billets",     desc: "Billets numériques uniques, vérifiables à l'entrée en temps réel.", color: "#E0A535"  },
+const trustItems: { icon: React.ElementType; titleKey: TranslationKey; descKey: TranslationKey; color: string }[] = [
+  { icon: CheckCircle,    titleKey: "annonces_verifiees",  descKey: "annonces_verifiees_desc", color: "#4A7C59"  },
+  { icon: Shield,         titleKey: "paiement_securise",   descKey: "paiement_securise_desc", color: "#C8922A"  },
+  { icon: Globe,          titleKey: "geolocalisation",     descKey: "geolocalisation_desc", color: "#C84B2F"  },
+  { icon: HeadphonesIcon, titleKey: "support",             descKey: "support_desc", color: "#8A6118"  },
+  { icon: QrCode,         titleKey: "qr_code",             descKey: "qr_code_desc", color: "#E0A535"  },
 ];
 
-const paymentMethods = [
+const paymentMethods: { name?: string; nameKey?: TranslationKey; color: string; bg: string; emoji: string }[] = [
   { name: "Wave",          color: "#1DAEFF", bg: "#0A1F2E", emoji: "💙" },
   { name: "Orange Money",  color: "#FF6600", bg: "#2A1200", emoji: "🧡" },
   { name: "Stripe",        color: "#7B72FF", bg: "#0D0D28", emoji: "💜" },
   { name: "PayPal",        color: "#4A90D9", bg: "#050F1E", emoji: "💛" },
-  { name: "Carte bancaire",color: "#C8922A", bg: "#0D0D1A", emoji: "💳" },
+  { nameKey: "carte_bancaire", color: "#C8922A", bg: "#0D0D1A", emoji: "💳" },
 ];
 
 // ── Page ────────────────────────────────────────────────────────────────────
@@ -403,7 +406,7 @@ export default function HomePage() {
               const Icon = stat.icon;
               return (
                 <div
-                  key={stat.label}
+                  key={stat.labelKey}
                   className={`fade-in-up delay-${(i + 1) * 100} flex flex-col items-center text-center py-12 px-6 group`}
                 >
                   {/* Icône avec halo coloré */}
@@ -423,7 +426,7 @@ export default function HomePage() {
                   </p>
 
                   {/* Label terre */}
-                  <p className="text-[13px] text-[#6B5B3E] leading-relaxed">{stat.label}</p>
+                  <p className="text-[13px] text-[#6B5B3E] leading-relaxed"><Translate k={stat.labelKey} /></p>
                 </div>
               );
             })}
@@ -437,11 +440,11 @@ export default function HomePage() {
           <div className="fade-in-up flex items-end justify-between mb-10">
             <div>
               <p className="text-[11px] font-bold text-[#C8922A] uppercase tracking-widest mb-2">
-                Immobilier
+                <Translate k="immobilier" />
               </p>
               <h2 className="section-title"><Translate k="annonces_recentes" /></h2>
               <p className="section-subtitle mt-1.5">
-                Villas, appartements, studios — trouvez votre logement idéal
+                <Translate k="annonces_recentes_desc" />
               </p>
             </div>
             <Link href="/immobilier" className="voir-tout-link hidden md:inline-flex">
@@ -456,7 +459,7 @@ export default function HomePage() {
 
           <div className="mt-8 text-center md:hidden">
             <Link href="/immobilier" className="voir-tout-link">
-              Voir toutes les annonces <span>→</span>
+              <Translate k="voir_tout" /> <span>→</span>
             </Link>
           </div>
         </div>
@@ -481,11 +484,11 @@ export default function HomePage() {
           <div className="fade-in-up flex items-end justify-between mb-10">
             <div>
               <p className="text-[11px] font-bold text-[#C8922A] uppercase tracking-widest mb-2">
-                Billetterie
+                <Translate k="billetterie" />
               </p>
               <h2 className="section-title-light"><Translate k="evenements_venir" /></h2>
               <p className="text-[15px] text-gray-500 mt-1.5 leading-relaxed">
-                Concerts, festivals, forums, soirées — ne ratez rien
+                <Translate k="evenements_venir_desc" />
               </p>
             </div>
             <Link href="/evenements" className="voir-tout-link-light hidden md:inline-flex">
@@ -505,12 +508,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="fade-in-up text-center mb-12">
             <p className="text-[11px] font-bold text-[#C8922A] uppercase tracking-widest mb-2">
-              Plateforme
+              <Translate k="plateforme_titre" />
             </p>
-            <h2 className="section-title">Tout ce dont vous avez besoin</h2>
+            <h2 className="section-title"><Translate k="plateforme_sous_titre" /></h2>
             <p className="section-subtitle mt-2 max-w-xl mx-auto">
-              Une seule plateforme pour l&apos;immobilier, l&apos;hébergement,
-              les événements et la billetterie en Afrique.
+              <Translate k="plateforme_description" />
             </p>
           </div>
 
@@ -518,7 +520,7 @@ export default function HomePage() {
             {modules.map((mod, i) => {
               const Icon = mod.icon;
               return (
-                <Link key={mod.title} href={mod.href}>
+                <Link key={mod.titleKey} href={mod.href}>
                   <div className={`fade-in-up delay-${(i + 1) * 100} card-premium group p-6 h-full cursor-pointer`}>
                     <div
                       className="inline-flex items-center justify-center w-13 h-13 rounded-2xl mb-4 transition-transform group-hover:scale-110 duration-300"
@@ -527,14 +529,14 @@ export default function HomePage() {
                       <Icon className="w-7 h-7" style={{ color: mod.color }} />
                     </div>
                     <h3 className="font-bold text-[#1A1A2E] mb-2 group-hover:text-[#C8922A] transition-colors duration-200 text-[15px]">
-                      {mod.title}
+                      <Translate k={mod.titleKey} />
                     </h3>
-                    <p className="text-[13px] text-[#7A7265] leading-relaxed mb-4">{mod.desc}</p>
+                    <p className="text-[13px] text-[#7A7265] leading-relaxed mb-4"><Translate k={mod.descKey} /></p>
                     <span
                       className="text-[12px] font-semibold flex items-center gap-1 group-hover:gap-2.5 transition-all duration-200"
                       style={{ color: mod.color }}
                     >
-                      Explorer <ChevronRight className="w-3.5 h-3.5" />
+                      <Translate k="voir_plus" /> <ChevronRight className="w-3.5 h-3.5" />
                     </span>
                   </div>
                 </Link>
@@ -554,11 +556,11 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="fade-in-up text-center mb-12">
             <p className="text-[11px] font-bold text-[#C8922A] uppercase tracking-widest mb-2">
-              Garanties
+              <Translate k="garanties" />
             </p>
-            <h2 className="section-title-light">Pourquoi choisir Kasafrik ?</h2>
+            <h2 className="section-title-light"><Translate k="pourquoi_kasafrik" /></h2>
             <p className="text-[15px] text-gray-500 mt-2 max-w-xl mx-auto leading-relaxed">
-              Des milliers d&apos;utilisateurs nous font confiance chaque jour.
+              <Translate k="confiance" />
             </p>
           </div>
 
@@ -567,7 +569,7 @@ export default function HomePage() {
               const Icon = item.icon;
               return (
                 <div
-                  key={item.title}
+                  key={item.titleKey}
                   className={`fade-in-up delay-${(i + 1) * 100} card-trust p-6 text-center group`}
                 >
                   <div
@@ -576,8 +578,8 @@ export default function HomePage() {
                   >
                     <Icon className="w-6 h-6" style={{ color: item.color }} />
                   </div>
-                  <h3 className="font-semibold text-white text-[13px] mb-2 leading-snug">{item.title}</h3>
-                  <p className="text-[12px] text-gray-500 leading-relaxed">{item.desc}</p>
+                  <h3 className="font-semibold text-white text-[13px] mb-2 leading-snug"><Translate k={item.titleKey} /></h3>
+                  <p className="text-[12px] text-gray-500 leading-relaxed"><Translate k={item.descKey} /></p>
                 </div>
               );
             })}
@@ -590,13 +592,13 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="fade-in-up text-center mb-8">
             <p className="text-[11px] font-bold text-gray-600 uppercase tracking-widest">
-              Modes de paiement acceptés
+              <Translate k="modes_paiement" />
             </p>
           </div>
           <div className="fade-in-up flex flex-wrap items-center justify-center gap-4">
             {paymentMethods.map((pm) => (
               <div
-                key={pm.name}
+                key={pm.name ?? pm.nameKey}
                 className="flex items-center gap-2.5 px-5 py-3 rounded-xl transition-all duration-200 cursor-default hover:scale-105"
                 style={{
                   backgroundColor: pm.bg,
@@ -605,7 +607,7 @@ export default function HomePage() {
               >
                 <span className="text-xl">{pm.emoji}</span>
                 <span className="text-[13px] font-bold" style={{ color: pm.color }}>
-                  {pm.name}
+                  {pm.nameKey ? <Translate k={pm.nameKey} /> : pm.name}
                 </span>
               </div>
             ))}
@@ -635,16 +637,15 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-white/15 border border-white/20">
             <Star className="w-3.5 h-3.5 text-white" fill="white" />
             <span className="text-xs font-bold text-white uppercase tracking-wider">
-              Plateforme N°1 en Afrique de l&apos;Ouest
+              <Translate k="plateforme_n1" />
             </span>
           </div>
 
           <h2 className="fade-in-up font-playfair text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-            Prêt à publier votre annonce ?
+            <Translate k="pret_publier" />
           </h2>
           <p className="fade-in-up text-white/80 text-[16px] mb-10 max-w-lg mx-auto leading-relaxed delay-100">
-            Rejoignez 15 000+ utilisateurs qui font confiance à Kasafrik pour
-            leurs projets immobiliers et événementiels.
+            <Translate k="rejoindre" />
           </p>
           <div className="fade-in-up flex flex-col sm:flex-row gap-4 justify-center delay-200">
             <Link href="/register">
@@ -652,7 +653,7 @@ export default function HomePage() {
                 className="px-8 py-4 font-bold rounded-[8px] transition-all duration-200 shadow-2xl hover:-translate-y-0.5 text-[15px]"
                 style={{ background: "white", color: "#8A6118" }}
               >
-                Créer un compte gratuit
+                <Translate k="creer_compte" />
               </button>
             </Link>
             <Link href="/immobilier">

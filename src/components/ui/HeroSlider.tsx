@@ -11,63 +11,73 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
+import type { translations } from "@/lib/i18n";
 
-const slides = [
+type TranslationKey = keyof typeof translations.fr;
+
+const slides: {
+  badgeKey: TranslationKey;
+  badgeTextColor: string;
+  badgeBgColor: string;
+  badgeBorderColor: string;
+  accentColor: string;
+  image: string;
+  altKey: TranslationKey;
+  subtitleKey: TranslationKey;
+  href: string;
+  ctaKey: TranslationKey;
+}[] = [
   {
-    badge: "IMMOBILIER",
+    badgeKey: "immobilier",
     badgeTextColor: "#E0A535",
     badgeBgColor: "rgba(200,146,42,0.22)",
     badgeBorderColor: "rgba(200,146,42,0.45)",
     accentColor: "#C8922A",
     image:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80",
-    alt: "Villa moderne en Afrique",
-    subtitle:
-      "Achetez ou louez parmi 1 200+ annonces vérifiées partout en Afrique.",
+    altKey: "alt_immobilier",
+    subtitleKey: "hero_sub_immobilier",
     href: "/immobilier",
-    cta: "Explorer les annonces",
+    ctaKey: "explorer",
   },
   {
-    badge: "HÔTELS",
+    badgeKey: "hotels",
     badgeTextColor: "#7DE8A0",
     badgeBgColor: "rgba(74,124,89,0.25)",
     badgeBorderColor: "rgba(74,124,89,0.50)",
     accentColor: "#4A7C59",
     image:
       "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80",
-    alt: "Hôtel de luxe en Afrique",
-    subtitle:
-      "Réservez votre hébergement dans les meilleurs hôtels et guesthouses.",
+    altKey: "alt_hotels",
+    subtitleKey: "hero_sub_hotels",
     href: "/hotels",
-    cta: "Voir les hôtels",
+    ctaKey: "voir_hotels",
   },
   {
-    badge: "ÉVÉNEMENTS",
+    badgeKey: "evenements",
     badgeTextColor: "#FF8A6E",
     badgeBgColor: "rgba(200,75,47,0.25)",
     badgeBorderColor: "rgba(200,75,47,0.50)",
     accentColor: "#C84B2F",
     image:
       "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1920&q=80",
-    alt: "Festival et concert en Afrique",
-    subtitle:
-      "Concerts, festivals, forums — découvrez les meilleurs événements d'Afrique.",
+    altKey: "alt_evenements",
+    subtitleKey: "hero_sub_evenements",
     href: "/evenements",
-    cta: "Voir les événements",
+    ctaKey: "voir_evenements",
   },
   {
-    badge: "BILLETTERIE",
+    badgeKey: "billetterie",
     badgeTextColor: "#D4A84B",
     badgeBgColor: "rgba(138,97,24,0.28)",
     badgeBorderColor: "rgba(138,97,24,0.55)",
     accentColor: "#8A6118",
     image:
       "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1920&q=80",
-    alt: "Billetterie événements en ligne",
-    subtitle:
-      "Achetez vos billets QR Code en ligne en quelques secondes, payez avec Wave ou Orange Money.",
+    altKey: "alt_billetterie",
+    subtitleKey: "hero_sub_billetterie",
     href: "/billetterie",
-    cta: "Acheter des billets",
+    ctaKey: "billets_qr",
   },
 ];
 
@@ -93,13 +103,13 @@ function SearchBar() {
 
         <div>
           <label className="block text-[11px] font-bold text-[#7A7265] mb-2 uppercase tracking-widest">
-            Type de bien
+            {t('type_bien')}
           </label>
           <select className="input-premium w-full px-3 py-2.5 text-sm bg-white">
-            <option value="">Tous les types</option>
-            <option value="sale">Vente</option>
-            <option value="rent">Location</option>
-            <option value="hotel">Hôtel</option>
+            <option value="">{t('tous_types')}</option>
+            <option value="sale">{t('vente')}</option>
+            <option value="rent">{t('location')}</option>
+            <option value="hotel">{t('hotel')}</option>
           </select>
         </div>
 
@@ -108,7 +118,7 @@ function SearchBar() {
             {t('budget')}
           </label>
           <select className="input-premium w-full px-3 py-2.5 text-sm bg-white">
-            <option value="">Pas de limite</option>
+            <option value="">{t('pas_limite')}</option>
             <option value="500000">500 000 FCFA</option>
             <option value="1000000">1 000 000 FCFA</option>
             <option value="5000000">5 000 000 FCFA</option>
@@ -172,7 +182,7 @@ export default function HeroSlider() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={s.image}
-            alt={s.alt}
+            alt={t(s.altKey)}
             className="w-full h-full object-cover"
             loading={i === 0 ? "eager" : "lazy"}
           />
@@ -230,7 +240,7 @@ export default function HeroSlider() {
                 className="text-xs font-bold uppercase tracking-wider"
                 style={{ color: slide.badgeTextColor }}
               >
-                {slide.badge}
+                {t(slide.badgeKey)}
               </span>
             </div>
 
@@ -244,7 +254,7 @@ export default function HeroSlider() {
             >
               <TrendingUp className="w-3.5 h-3.5 text-[#E0A535]" />
               <span className="text-xs font-bold text-[#E0A535] uppercase tracking-wider">
-                N°1 en Afrique de l&apos;Ouest
+                {t('n1_afrique')}
               </span>
             </div>
           </div>
@@ -259,14 +269,14 @@ export default function HeroSlider() {
             key={current}
             className="animate-fade-in text-[17px] text-gray-300 max-w-2xl mx-auto mb-10 leading-[1.75]"
           >
-            {slide.subtitle}
+            {t(slide.subtitleKey)}
           </p>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
             <Link href={slide.href}>
               <button className="btn-gold inline-flex items-center gap-2 px-8 py-4 text-base tracking-wide">
-                {slide.cta}
+                {t(slide.ctaKey)}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
@@ -293,7 +303,7 @@ export default function HeroSlider() {
           WebkitBackdropFilter: "blur(10px)",
           border: "1px solid rgba(255,255,255,0.22)",
         }}
-        aria-label="Slide précédent"
+        aria-label={t('slide_precedent')}
       >
         <ChevronLeft className="w-5 h-5 text-white" />
       </button>
@@ -309,7 +319,7 @@ export default function HeroSlider() {
           WebkitBackdropFilter: "blur(10px)",
           border: "1px solid rgba(255,255,255,0.22)",
         }}
-        aria-label="Slide suivant"
+        aria-label={t('slide_suivant')}
       >
         <ChevronRight className="w-5 h-5 text-white" />
       </button>
@@ -323,7 +333,7 @@ export default function HeroSlider() {
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            aria-label={`Slide ${i + 1} — ${s.badge}`}
+            aria-label={`${t('slide')} ${i + 1} — ${t(s.badgeKey)}`}
             style={{
               width: i === current ? 28 : 8,
               height: 8,
